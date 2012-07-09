@@ -28,7 +28,7 @@ bar_offset = ceil(max(X_bearings[2] / 2 + rim_thickness + 1,                    
 
 echo(bar_offset);
 
-mounting_holes = [90, 270];
+mounting_holes = [67, 90, 113, 247, 270, 293];
 
 function x_carriage_offset() = bar_offset;
 function x_bar_spacing() = hole + bearing_holder_width(X_bearings);
