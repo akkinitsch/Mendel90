@@ -64,10 +64,10 @@ module x_axis_assembly(show_extruder) {
             }
 
 
-    elliptical_cable_strip(ribbon_clamp_slot(extruder_ways),
-                [motor_end, 0, Z + Z0] + x_end_extruder_ribbon_clamp_offset(),
-                [-X + X_origin, 0, Z + Z0 + x_carriage_offset()] + extruder_connector_offset(),
-                [-X_travel / 2 + X_origin, 0, Z + Z0 + x_carriage_offset()] + extruder_connector_offset());
+    // elliptical_cable_strip(ribbon_clamp_slot(extruder_ways),
+    //             [motor_end, 0, Z + Z0] + x_end_extruder_ribbon_clamp_offset(),
+    //             [-X + X_origin, 0, Z + Z0 + x_carriage_offset()] + extruder_connector_offset(),
+    //             [-X_travel / 2 + X_origin, 0, Z + Z0 + x_carriage_offset()] + extruder_connector_offset());
     end("x_axis_assembly");
 }
 
@@ -306,13 +306,13 @@ module y_axis_assembly(show_bed) {
                     rotate([0, 180, end[1]])
                         y_belt_anchor_assembly(Y_belt_clamp_height, end[2]);
 
-            translate([0, cable_clamp_y, carriage_top])
-                rotate([180, 0, 0])
-                    color(ribbon_clamp_color) render() ribbon_clamp(bed_ways, cap_screw);
+            // translate([0, cable_clamp_y, carriage_top])
+            //     rotate([180, 0, 0])
+            //         color(ribbon_clamp_color) render() ribbon_clamp(bed_ways, cap_screw);
 
-            translate([0, cable_clamp_y, carriage_bottom])
-                rotate([180, 0, 0])
-                    ribbon_clamp_assembly(bed_ways, cap_screw, 25, sheet_thickness(Y_carriage) + ribbon_clamp_thickness(), false, true);
+            // translate([0, cable_clamp_y, carriage_bottom])
+            //     rotate([180, 0, 0])
+            //         ribbon_clamp_assembly(bed_ways, cap_screw, 25, sheet_thickness(Y_carriage) + ribbon_clamp_thickness(), false, true);
 
             translate([0, 0, Y_carriage_height + sheet_thickness(Y_carriage) / 2]) {
                 if(show_bed)
@@ -694,39 +694,39 @@ module frame_assembly(show_gantry = true) {
 
     ribbon_clamp_z = height - base_clearance - ribbon_clamp_width(frame_screw);
 
-    translate([motor_end - x_motor_offset(), gantry_setback, ribbon_clamp_z])
-        rotate([90, 0, 0]) {
-            if(frame_nuts)
-                ribbon_clamp_assembly(x_end_ways, frame_screw, frame_screw_length, sheet_thickness(frame), false, true);
-            else
-                ribbon_clamp_assembly(x_end_ways, frame_screw, frame_screw_length);
+    // translate([motor_end - x_motor_offset(), gantry_setback, ribbon_clamp_z])
+    //     rotate([90, 0, 0]) {
+    //         if(frame_nuts)
+    //             ribbon_clamp_assembly(x_end_ways, frame_screw, frame_screw_length, sheet_thickness(frame), false, true);
+    //         else
+    //             ribbon_clamp_assembly(x_end_ways, frame_screw, frame_screw_length);
 
-        translate([0, ribbon_clamp_width(frame_screw) / 2, 0])
-            rotate([90, 0, 90])
-                cable_strip(ribbon_clamp_slot(x_end_ways), gantry_setback - x_end_ribbon_clamp_y(),
-                        (Z_travel + (ribbon_clamp_z - (Z_travel + Z0 + x_end_ribbon_clamp_z()))) * 2,
-                        Z + Z0 + x_end_ribbon_clamp_z() - ribbon_clamp_z, 50);
-        }
+    //     translate([0, ribbon_clamp_width(frame_screw) / 2, 0])
+    //         rotate([90, 0, 90])
+    //             cable_strip(ribbon_clamp_slot(x_end_ways), gantry_setback - x_end_ribbon_clamp_y(),
+    //                     (Z_travel + (ribbon_clamp_z - (Z_travel + Z0 + x_end_ribbon_clamp_z()))) * 2,
+    //                     Z + Z0 + x_end_ribbon_clamp_z() - ribbon_clamp_z, 50);
+    //     }
 
-    translate([X_origin, cable_clamp_y,0]) {
-        ribbon_clamp_assembly(bed_ways, base_screw, base_screw_length);
+    // translate([X_origin, cable_clamp_y,0]) {
+    //     ribbon_clamp_assembly(bed_ways, base_screw, base_screw_length);
 
-        translate([0, ribbon_clamp_width(base_screw), 0])
-            rotate([90, 0, 90])
-                cable_strip(ribbon_clamp_slot(bed_ways), Y_carriage_height - sheet_thickness(Y_carriage) / 2, Y_travel, Y);
-    }
+    //     translate([0, ribbon_clamp_width(base_screw), 0])
+    //         rotate([90, 0, 90])
+    //             cable_strip(ribbon_clamp_slot(bed_ways), Y_carriage_height - sheet_thickness(Y_carriage) / 2, Y_travel, Y);
+    // }
 
-    place_cable_clips();
+    // place_cable_clips();
 
     frame_base();
 
     if(show_gantry) {
 
-        fixing_blocks()
-            fixing_block_assembly();
+        // fixing_blocks()
+        //     fixing_block_assembly();
 
-        fixing_blocks(true)
-            fixing_block_assembly(true);
+        // fixing_blocks(true)
+        //     fixing_block_assembly(true);
 
         frame_stay(true, eta);
         frame_stay(false);
@@ -742,10 +742,10 @@ module machine_assembly() {
     show_bed = true;
 
     translate([0,0, sheet_thickness(base)]) {
-        bed_fan_assembly();
-        electronics_assembly();
+        // bed_fan_assembly();
+        // electronics_assembly();
 
-        x_axis_assembly(true);
+        x_axis_assembly(false);
         z_axis_assembly();
         y_axis_assembly(show_bed);
         //

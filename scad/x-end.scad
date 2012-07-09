@@ -533,8 +533,8 @@ module x_end_assembly(motor_end) {
                 NEMA(X_motor);
                 translate([0,0, mbracket_thickness])
                     NEMA_screws(X_motor, 3);
-                translate([0, 0, 4])
-                    pulley_assembly();
+                // translate([0, 0, 4])
+                //     pulley_assembly();
             }
         }
         translate([switch_op_x, sbracket_y - sbracket_thickness / 2 - microswitch_thickness() / 2, switch_op_z])

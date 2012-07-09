@@ -385,10 +385,10 @@ module x_carriage_assembly(show_extruder = false) {
             rotate([-90,0,180])
                 wades_assembly(false, true);
 
-    for(end = [-1, 1])
-        translate([25 * end, 0, nut_trap_thickness])
-            rotate([0,0, 45])
-                wingnut(M4_wingnut);
+    // for(end = [-1, 1])
+    //     translate([25 * end, 0, nut_trap_thickness])
+    //         rotate([0,0, 45])
+    //             wingnut(M4_wingnut);
 
     translate([base_offset, bar_y, bar_offset]) {
         linear_bearing(X_bearings);
@@ -458,4 +458,4 @@ module x_carriage_parts_stl() {
 if(0)
     x_carriage_parts_stl();
 else
-    x_carriage_assembly(true);
+    x_carriage_assembly(false);

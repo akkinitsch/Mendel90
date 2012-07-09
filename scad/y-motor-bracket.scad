@@ -91,8 +91,8 @@ module y_motor_assembly() {
     //
     // Pulley
     //
-    translate([0, 0, 4])
-        pulley_assembly();
+    // translate([0, 0, 4])
+    //     pulley_assembly();
 
     end("y_motor_assembly");
 }
