@@ -94,8 +94,8 @@ bar_y = x_bar_spacing() / 2;
 
 belt_edge = -x_carriage_width() / 2 - X_carriage_clearance;
 idler_front = belt_edge - belt_width(X_belt) / 2 + ball_bearing_width(BB624) / 2 + washer_thickness(M4_washer) + washer_thickness(M5_penny_washer);
-idler_screw_length = 40;
-idler_depth = idler_screw_length - ball_bearing_width(BB624) - 2 * (washer_thickness(M4_washer) + washer_thickness(M5_penny_washer)) - 1;
+idler_screw_length = 40 + ball_bearing_width(BB624);
+idler_depth = 40 - ball_bearing_width(BB624) - 2 * (washer_thickness(M4_washer) + washer_thickness(M5_penny_washer)) - 1;
 idler_back = idler_front + idler_depth;
 idler_width = ceil(2 * (M4_nut_radius + wall));
 
@@ -581,18 +581,23 @@ module x_end_assembly(motor_end) {
                 ribbon_clamp_assembly(extruder_ways, ribbon_screw, 16, wall, true);
     }
     else {
-        translate([x_idler_offset(), belt_edge - belt_width(X_belt) / 2, 0]) {
-            rotate([90,0,0 ])
-                ball_bearing(BB624);
+        translate([x_idler_offset(), (belt_edge - belt_width(X_belt) / 2) - ball_bearing_width(X_idler_bearing) / 2, 0]) {
+            translate([0, -ball_bearing_width(X_idler_bearing) / 2, 0]) {
+                rotate([90,0,0 ])
+                    ball_bearing(BB624);
+                translate([0, ball_bearing_width(X_idler_bearing), 0])
+                    rotate([90,0,0 ])
+                        ball_bearing(BB624);
+            }
             for(i = [-1, 1]) {
-                translate([0, (ball_bearing_width(X_idler_bearing) / 2) * i, 0])
+                translate([0, ball_bearing_width(X_idler_bearing) * i, 0])
                     rotate([-i * 90, 0, 0])
                         washer(M4_washer);
-                translate([0, (ball_bearing_width(X_idler_bearing) / 2 + washer_thickness(M4_washer)) * i, 0])
+                translate([0, (ball_bearing_width(X_idler_bearing) + washer_thickness(M4_washer)) * i, 0])
                     rotate([-i * 90, 0, 0])
                         washer(M5_penny_washer);
             }
-            translate([0,-ball_bearing_width(X_idler_bearing) / 2 - washer_thickness(M4_washer) - washer_thickness(M5_penny_washer),0])
+            translate([0,-ball_bearing_width(X_idler_bearing) - washer_thickness(M4_washer) - washer_thickness(M5_penny_washer),0])
                 rotate([90,0,0])
                     screw(M4_cap_screw, idler_screw_length);
         }
