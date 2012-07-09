@@ -32,6 +32,7 @@ bed_holes = 209;
 
 base = MDF12;
 base_corners = 0;
+base_nuts = false;
 
 frame = MDF12;
 frame_corners = 0;

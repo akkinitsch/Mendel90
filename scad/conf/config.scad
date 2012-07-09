@@ -114,8 +114,10 @@ bed_ways = 20 + 2;                      // ten each way for the current plus a t
 
 function z_bar_offset() = round(NEMA_width(Z_motor)) / 2;
 
-base_screw = sheet_is_soft(base) ? frame_soft_screw : frame_thick_screw;
-base_screw_length = screw_shorter_than(sheet_thickness(base) + 5 + 2 * washer_thickness(screw_washer(base_screw)));
+base_screw = sheet_is_soft(base) ? frame_soft_screw : base_nuts ? frame_thin_screw : frame_thick_screw;
+base_screw_length = base_nuts ? screw_longer_than(sheet_thickness(base) + 5 + 2 * washer_thickness(screw_washer(base_screw)) +
+                                      nut_thickness(screw_nut(base_screw), true))
+                                : screw_shorter_than(sheet_thickness(base) + 5 + 2 * washer_thickness(screw_washer(base_screw)));
 
 base_clip_screw = base_screw;
 base_clip_screw_length = base_screw_length;
@@ -147,11 +149,19 @@ module frame_screw_hole() {
 }
 
 module base_screw() {
-    screw_and_washer(base_screw, base_screw_length, true);
+    if(base_nuts) {
+        translate([0, 0, -sheet_thickness(base) - thickness])
+            rotate([180, 0, 0])
+                screw_and_washer(base_screw, base_screw_length, !base_nuts);
+        nut_and_washer(screw_nut(base_screw), true);
+    } else {
+        screw_and_washer(base_screw, base_screw_length, !base_nuts);
+    }
 }
 
 module base_screw_hole() {
-    cylinder(r = screw_pilot_hole(base_screw), h = 100, center = true);
+    cylinder(r = base_nuts ? screw_clearance_radius(base_screw) :
+                              screw_pilot_hole(base_screw), h = 100, center = true);
 }
 
 bar_clamp_depth = 4 + washer_diameter(screw_washer(base_screw));           // how thick the bar clamps are

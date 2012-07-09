@@ -32,6 +32,7 @@ bed_holes = 209;
 
 base = PMMA10;               // Sheet material used for the base. Needs to be thick enough to screw into.
 base_corners = 50;
+base_nuts = false;
 
 frame = PMMA6;
 frame_corners = 25;
