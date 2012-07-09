@@ -134,7 +134,7 @@ module z_limit_switch_assembly() {
 
         translate([screw_x - screw_head_height(M3_hex_screw), -screw_y, screw_z])
             rotate([0, 90, 0])
-                screw(M3_hex_screw, 16);
+                screw(M3_cap_screw, 16);
 
         for(i = [0 : washers - 1])
             translate([slot_x + leg_width / 2 + i * washer_thickness, -screw_y, screw_z])

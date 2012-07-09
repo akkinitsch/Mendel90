@@ -68,5 +68,5 @@ module NEMA_screws(motor, n = 4) {
     for(a = [0: 90 : 90 * (n - 1)])
         rotate([0, 0, a])
             translate([motor[8]/2, motor[8]/2, 0])
-                screw_and_washer(M3_pan_screw, 8, true);
+                screw_and_washer(M3_cap_screw, 8, true);
 }

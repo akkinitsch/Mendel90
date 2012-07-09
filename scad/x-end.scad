@@ -545,7 +545,7 @@ module x_end_assembly(motor_end) {
     for(side = [-1, 1]) {
         translate([front - length / 2, side * (bar_y + clamp_thickness + slit / 2), thickness / 2 + washer_diameter(washer) / 2])
             rotate([-90 * side,0,0])
-                screw_and_washer(hex_screw, 16);
+                screw_and_washer(cap_screw, 16);
 
        translate([front - length / 2, side * (bar_y - clamp_depth - slit / 2 + nut_trap_depth), thickness / 2 + washer_diameter(washer) / 2])
             rotate([90 * side,0,0])
