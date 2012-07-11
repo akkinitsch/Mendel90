@@ -60,11 +60,11 @@ module z_linear_bearings(motor_end) {
 
 
             //entry cut out
-            translate([10 * sqrt(2) - opening, 0, bearing_height / 2])
-                rotate([0, 0, 45])
-                    cube([20, 20, bearing_height + 1], center = true);
+            translate([bearing_width / 2 + 2, 0, bearing_height / 2])
+                cube([bearing_width, bearing_width, bearing_height + 1], center = true);
 
         }
+
         //
         // shelves
         //
@@ -125,6 +125,18 @@ function x_end_bar_length() = -back;
 function x_end_height() = bearing_height - thickness / 2;
 function x_end_thickness() = thickness;
 
+ziptie_clearance = 1;
+
+ziptie = small_ziptie;
+
+zipslot_width    = ziptie_width(ziptie) + ziptie_clearance;
+zipslot_thickness = ziptie_thickness(ziptie) + ziptie_clearance;
+zipslot = [
+    max(
+        thickness/2 + zipslot_width/2,
+        - thickness/2 + shelf_thickness + bearing_length/2 + zipslot_width/2),
+    bearing_height - bearing_length/2 - thickness/2 - zipslot_width];
+
 ribbon_screw = M3_cap_screw;
 ribbon_nut = screw_nut(ribbon_screw);
 ribbon_nut_trap_depth = nut_trap_depth(ribbon_nut);
@@ -152,6 +164,7 @@ module x_end_bracket(motor_end, assembly = false){
         stl("x_motor_bracket");
     else
         stl("x_idler_bracket");
+    difference(){
     union(){
         translate([0, 0, - thickness / 2])
             z_linear_bearings(motor_end);
@@ -514,6 +527,21 @@ module x_end_bracket(motor_end, assembly = false){
 
             }
         }
+    }
+    difference(){
+        union(){
+            translate([0,0,zipslot[0]])
+                tube(h = zipslot_width, ir = bearing_dia / 2 + wall,
+                                        or = bearing_dia / 2 + wall + zipslot_thickness, center=true, fn=64); // ziptie slot
+            translate([0,0,zipslot[1]])
+                tube(h = zipslot_width, ir = bearing_dia / 2 + wall,
+                                        or = bearing_dia / 2 + wall + zipslot_thickness, center=true, fn=64); // ziptie slot
+        }
+        translate([0,bearing_width + 1,bearing_height / 2 - thickness / 2])
+            cube([bearing_width*2,bearing_width,bearing_height], center=true);
+        translate([0,-bearing_width - 1,bearing_height / 2 - thickness / 2])
+            cube([bearing_width*2,bearing_width,bearing_height], center=true);
+    }
     }
 }
 
