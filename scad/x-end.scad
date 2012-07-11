@@ -11,7 +11,6 @@ include <conf/config.scad>
 
 use <x-carriage.scad>
 use <pulley.scad>
-use <ribbon_clamp.scad>
 use <wade.scad>
 
 bwall = 2.3;
@@ -137,26 +136,9 @@ zipslot = [
         - thickness/2 + shelf_thickness + bearing_length/2 + zipslot_width/2),
     bearing_height - bearing_length/2 - thickness/2 - zipslot_width];
 
-ribbon_screw = M3_cap_screw;
-ribbon_nut = screw_nut(ribbon_screw);
-ribbon_nut_trap_depth = nut_trap_depth(ribbon_nut);
-ribbon_pillar_depth = 12;
-ribbon_pillar_thickness = wall + ribbon_nut_trap_depth;
-ribbon_clamp_x = back - ribbon_pillar_depth;
-ribbon_clamp_y = mbracket_front + washer_diameter(screw_washer(ribbon_screw)) / 2 + 2;
-//ribbon_clamp_z = x_carriage_offset() + extruder_connector_height();
-ribbon_clamp_z = mbracket_height + ribbon_clamp_length(extruder_ways, ribbon_screw) / 2 - thickness / 2 + 0.5;
-ribbon_pillar_width = nut_radius(ribbon_nut) * 2 + 2 * wall + 0.5;
-ribbon_pillar_top = ribbon_clamp_z + ribbon_clamp_length(extruder_ways, ribbon_screw) / 2;
-
 function anti_backlash_height() = 24 + thickness / 2;
 anti_backlash_radius = Z_nut_radius + 0.2;
 anti_backlash_wall = 3;
-
-function x_end_ribbon_clamp_y() = mbracket_front + mbracket_depth - mbracket_thickness;
-function x_end_ribbon_clamp_z() = mbracket_height - thickness / 2 - mbracket_thickness - nut_radius(ribbon_nut);
-
-function x_end_extruder_ribbon_clamp_offset() = [-ribbon_clamp_x, ribbon_clamp_y + ribbon_clamp_width(ribbon_screw) / 2, ribbon_clamp_z];
 
 module x_end_bracket(motor_end, assembly = false){
 
@@ -337,39 +319,6 @@ module x_end_bracket(motor_end, assembly = false){
                             rotate([90, 0, 0])
                                 right_triangle(width = 4, height = 4, h = mbracket_depth - eta, center = true);
                     }
-                    //
-                    // ribbon clamp pillar
-                    //
-                    translate([ribbon_clamp_x,
-                               ribbon_clamp_y,
-                               mbracket_height + (ribbon_pillar_top - mbracket_height - thickness / 2) / 2 - eta])
-                    {
-                        translate([ribbon_pillar_thickness / 2, 0, 0])
-                            cube([ribbon_pillar_thickness,
-                                  ribbon_pillar_width,
-                                  ribbon_pillar_top - mbracket_height + thickness / 2], center = true);
-                        for(side = [-1, 1])
-                            translate([ribbon_pillar_thickness - eta, side * (ribbon_pillar_width - wall) / 2,
-                                        -(ribbon_pillar_top - mbracket_height + thickness / 2) / 2 - eta])
-                                rotate([90,0,0])
-                                    right_triangle(width = ribbon_pillar_depth - ribbon_pillar_thickness,
-                                                   height = ribbon_pillar_top - mbracket_height + thickness / 2,
-                                                   h = wall);
-                    }
-                    //
-                    // Ribbon clamp nut traps
-                    //
-                    translate([x_motor_offset(), mbracket_front + mbracket_depth - 2 * mbracket_thickness + eta, x_end_ribbon_clamp_z()])
-                        rotate([90, 180, 0])
-                            ribbon_clamp_holes(x_end_ways, ribbon_screw)
-                                difference() {
-                                    teardrop(r = nut_radius(ribbon_nut) + 2, h = ribbon_nut_trap_depth, truncate = false);
-                                    translate([0, (nut_radius(ribbon_nut) + 2) * sqrt(2), ribbon_nut_trap_depth + eta])
-                                        rotate([0, 90, 180])
-                                            right_triangle(width = ribbon_nut_trap_depth, height = ribbon_nut_trap_depth, h = 20);
-                                }
-
-
                 }
                 //
                 // Slits to leave clamp free
@@ -405,25 +354,6 @@ module x_end_bracket(motor_end, assembly = false){
                                          teardrop_plus(r = (washer_diameter(M3_washer) + 1) / 2, h = 2 * (mbracket_thickness - 3.999), center = true);
                                 }
                 }
-                //
-                // ribbon clamp holes
-                //
-                translate([x_motor_offset(),
-                           mbracket_front + mbracket_depth - 2 * mbracket_thickness - ribbon_nut_trap_depth,
-                           mbracket_height - thickness / 2  - mbracket_thickness - nut_radius(ribbon_nut)])
-                    rotate([90, 0, 0])
-                        ribbon_clamp_holes(x_end_ways, ribbon_screw)
-                            difference() {
-                                nut_trap(screw_clearance_radius(ribbon_screw), nut_radius(ribbon_nut), ribbon_nut_trap_depth, true);
-                                translate([0,0, 10])
-                                    cylinder(r = 10, h =100);
-                            }
-
-                translate([ribbon_clamp_x + ribbon_pillar_thickness, ribbon_clamp_y, ribbon_clamp_z])
-                    rotate([-90,90,90])
-                        ribbon_clamp_holes(extruder_ways, ribbon_screw)
-                            rotate([0, 0, 90])
-                                nut_trap(screw_clearance_radius(ribbon_screw), nut_radius(ribbon_nut), ribbon_nut_trap_depth, true);
                 //
                 // Hole for switch wires
                 //
@@ -603,16 +533,6 @@ module x_end_assembly(motor_end) {
                         rotate([180,0,0])
                             screw_and_washer(No2_screw, 13);
             }
-        //
-        // ribbon clamps
-        //
-        translate([x_motor_offset(), x_end_ribbon_clamp_y(), x_end_ribbon_clamp_z()])
-            rotate([-90, 0, 0])
-                ribbon_clamp_assembly(x_end_ways, M3_hex_screw, 16, mbracket_thickness);
-
-        translate([ribbon_clamp_x, ribbon_clamp_y, ribbon_clamp_z])
-            rotate([-90, 90, 90])
-                ribbon_clamp_assembly(extruder_ways, ribbon_screw, 16, wall, true);
     }
     else {
         translate([x_idler_offset(), (belt_edge - belt_width(X_belt) / 2) - ball_bearing_width(X_idler_bearing) / 2, 0]) {
