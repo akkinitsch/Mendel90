@@ -441,21 +441,6 @@ module fixing_blocks(upper = false) {
 }
 
 module fixing_block_holes() {
-    fixing_blocks()
-        group() {
-            fixing_block_v_hole(0)
-                base_screw_hole();
-            fixing_block_h_holes(0)
-                frame_screw_hole();
-        }
-
-    fixing_blocks(true)
-        group() {
-            fixing_block_v_hole(0)
-                frame_screw_hole();
-            fixing_block_h_holes(0)
-                frame_screw_hole();
-        }
 }
 
 module frame_base() {
