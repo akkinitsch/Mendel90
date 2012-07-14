@@ -571,55 +571,55 @@ module frame_stay(left, bodge = 0) {
 
         fixing_block_holes();
 
-        if(left)
-            translate([x + (sheet_thickness(frame) + fan_depth(case_fan)) / 2, fan_y, fan_z])
-                rotate([0,90,0])
-                    scale([1 + bodge, 1 + bodge, 1]) fan_holes(case_fan);       // scale prevents OpenCSG z buffer artifacts
+        // if(left)
+        //     translate([x + (sheet_thickness(frame) + fan_depth(case_fan)) / 2, fan_y, fan_z])
+        //         rotate([0,90,0])
+        //             scale([1 + bodge, 1 + bodge, 1]) fan_holes(case_fan);       // scale prevents OpenCSG z buffer artifacts
 
-        else {
-            //
-            // Electronics mounting holes
-            //
-            translate([x, sanguinololu_y, sanguinololu_z])
-                rotate([90, 0, 90])
-                    sanguinololu_screw_positions()
-                        cylinder(r = M3_tap_radius, h = 100, center = true);
+        // else {
+        //     //
+        //     // Electronics mounting holes
+        //     //
+        //     translate([x, sanguinololu_y, sanguinololu_z])
+        //         rotate([90, 0, 90])
+        //             sanguinololu_screw_positions()
+        //                 cylinder(r = M3_tap_radius, h = 100, center = true);
 
-            translate([x, psu_y, psu_z])
-                rotate([0, -90, 180])
-                    psu_screw_positions(psu)
-                        cylinder(r = psu_screw_hole_radius(psu), h = 100, center = true);
+        //     translate([x, psu_y, psu_z])
+        //         rotate([0, -90, 180])
+        //             psu_screw_positions(psu)
+        //                 cylinder(r = psu_screw_hole_radius(psu), h = 100, center = true);
 
-            //
-            // Wiring holes
-            //
-            translate([x, gantry_setback + sheet_thickness(frame) + fixing_block_height() + motor_wires_hole_radius,
-                          hole_edge_clearance + motor_wires_hole_radius]) {
-                rotate([0, 90, 0])
-                    wire_hole(motor_wires_hole_radius); // Z rhs motor at bottom
+        //     //
+        //     // Wiring holes
+        //     //
+        //     translate([x, gantry_setback + sheet_thickness(frame) + fixing_block_height() + motor_wires_hole_radius,
+        //                   hole_edge_clearance + motor_wires_hole_radius]) {
+        //         rotate([0, 90, 0])
+        //             wire_hole(motor_wires_hole_radius); // Z rhs motor at bottom
 
-                translate([0, motor_wires_hole_radius + hole_edge_clearance + motor_wires_hole_radius, 0]) {
-                    rotate([0, 90, 0])
-                        wire_hole(motor_wires_hole_radius); // Y motor wires at bottom
+        //         translate([0, motor_wires_hole_radius + hole_edge_clearance + motor_wires_hole_radius, 0]) {
+        //             rotate([0, 90, 0])
+        //                 wire_hole(motor_wires_hole_radius); // Y motor wires at bottom
 
-                    translate([0, motor_wires_hole_radius + hole_edge_clearance + endstop_wires_hole_radius,
-                                endstop_wires_hole_radius - motor_wires_hole_radius])
-                        rotate([0, 90, 0])
-                            wire_hole(endstop_wires_hole_radius); // Y endstop wires at bottom
-                }
-            }
+        //             translate([0, motor_wires_hole_radius + hole_edge_clearance + endstop_wires_hole_radius,
+        //                         endstop_wires_hole_radius - motor_wires_hole_radius])
+        //                 rotate([0, 90, 0])
+        //                     wire_hole(endstop_wires_hole_radius); // Y endstop wires at bottom
+        //         }
+        //     }
 
-            translate([x, gantry_setback + sheet_thickness(frame) + stay_depth - 2 * base_clearance - fixing_block_width() - bed_wires_hole_radius,
-                          hole_edge_clearance + bed_wires_hole_radius]) {
-                rotate([0, 90, 0])
-                    wire_hole(bed_wires_hole_radius);     // Bed wires at bottom
+        //     translate([x, gantry_setback + sheet_thickness(frame) + stay_depth - 2 * base_clearance - fixing_block_width() - bed_wires_hole_radius,
+        //                   hole_edge_clearance + bed_wires_hole_radius]) {
+        //         rotate([0, 90, 0])
+        //             wire_hole(bed_wires_hole_radius);     // Bed wires at bottom
 
-                translate([0, -bed_wires_hole_radius - hole_edge_clearance - thermistor_wires_hole_radius,
-                           thermistor_wires_hole_radius - bed_wires_hole_radius])
-                    rotate([0, 90, 0])
-                        wire_hole(thermistor_wires_hole_radius); // Bed thermistor wires
-            }
-        }
+        //         translate([0, -bed_wires_hole_radius - hole_edge_clearance - thermistor_wires_hole_radius,
+        //                    thermistor_wires_hole_radius - bed_wires_hole_radius])
+        //             rotate([0, 90, 0])
+        //                 wire_hole(thermistor_wires_hole_radius); // Bed thermistor wires
+        //     }
+        // }
         translate([x, gantry_setback + sheet_thickness(frame) + endstop_wires_hole_radius + hole_edge_clearance, z_gantry_wire_height]) {
             translate([0, 0, cable_clip_offset(frame_clip_screw, endstop_wires)])
                 rotate([0, 90, 0])
