@@ -127,6 +127,10 @@ def dxf_to_svg(fn):
             for point in loop:
                 scene.add(Line(p(last[0],last[1]),p(point[0],point[1])))
                 last = point
+
+    scene.add(Line(p(0, ymin - 5), p(0, ymax + 5)))
+    scene.add(Line(p(xmin - 5, 0), p(xmax + 5, 0)))
+
     scene.write_svg()
 
 if __name__ == '__main__':
