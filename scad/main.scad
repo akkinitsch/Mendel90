@@ -122,10 +122,10 @@ module z_axis_assembly() {
 //
 Y_bar_length =  Y_travel + Y_carriage_depth + 2 * axis_endstop_clearance;
 
-Y_bar_length2 = Y_travel + bearing_mount_length(Y_bearings) + 2 * bar_clamp_depth + axis_endstop_clearance + bar_clamp_switch_y_offset();
+Y_bar_length2 = Y_travel + Y_extra_travel + bearing_mount_length(Y_bearings) + 2 * bar_clamp_depth + axis_endstop_clearance + bar_clamp_switch_y_offset();
 
 Y_bar_spacing = Y_carriage_width - bearing_mount_width(Y_bearings);
-Y_bearing_inset = bearing_mount_length(Y_bearings) / 2 + bar_clamp_depth;
+Y_bearing_inset = bearing_mount_length(Y_bearings) / 2 + bar_clamp_depth + Y_extra_travel / 2;
 
 Y_belt_motor_offset = 13 + belt_width(Y_belt) / 2;
 
@@ -137,8 +137,8 @@ Y_belt_line = X_origin - ribbon_clamp_slot(bed_ways) / 2 - y_belt_anchor_width()
 
 Y_motor_end = -base_depth / 2 + y_motor_bracket_width() / 2 + base_clearance;
 Y_idler_end =  base_depth / 2 - y_idler_offset() - base_clearance;
-Y_belt_anchor_m = Y_motor_end +  NEMA_width(Y_motor) / 2 + Y_travel / 2;
-Y_belt_anchor_i = Y_idler_end - y_idler_clearance() - Y_travel / 2;
+Y_belt_anchor_m = Y_motor_end +  NEMA_width(Y_motor) / 2 + Y_travel / 2 + Y_extra_travel / 2;
+Y_belt_anchor_i = Y_idler_end - y_idler_clearance() - Y_travel / 2 - Y_extra_travel / 2;
 Y_belt_end = 20;
 Y_belt_gap = Y_belt_anchor_i - Y_belt_anchor_m - 2 * Y_belt_end;
 

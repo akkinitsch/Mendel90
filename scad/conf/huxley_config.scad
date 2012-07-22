@@ -20,6 +20,8 @@ Z_motor = NEMA14;
 
 X_travel = 140;
 Y_travel = 140;
+// Extra travel distance on Y by moving the bearing holders further in on bed
+Y_extra_travel = 0;
 Z_travel = 110;
 
 bed_depth = 150;
