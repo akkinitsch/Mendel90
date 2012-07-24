@@ -185,6 +185,9 @@ module y_rail_holes() {
     rotate([0,0,180])
         translate([-Y_bar_spacing / 2, offset / 2, 0])
              rail_holes(Y_bar_length2);
+    rotate([0,0,180])
+        translate([-Y_bar_spacing / 2, offset / 2, 0])
+             rail_holes(Y_bar_length);
 }
 
 cable_clamp_y = Y_carriage_depth / 2 - ribbon_clamp_width(cap_screw);
