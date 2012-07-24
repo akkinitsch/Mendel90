@@ -75,7 +75,7 @@ module x_axis_assembly(show_extruder) {
 // Z axis
 //
 Z_motor_length = NEMA_length(Z_motor);
-Z_bar_length = height - Z_motor_length - base_clearance;
+Z_bar_length = necessary_height - Z_motor_length - base_clearance;
 module z_end(motor_end) {
     Z_screw_length = Z0 + Z_travel + anti_backlash_height() + axis_endstop_clearance
         - (Z_motor_length + NEMA_shaft_length(Z_motor) + 2);
@@ -135,8 +135,8 @@ Y_belt_motor_offset = 13 + belt_width(Y_belt) / 2;
 //                 - NEMA_length(Y_motor) - Y_belt_motor_offset - X_carriage_clearance);
 Y_belt_line = X_origin - ribbon_clamp_slot(bed_ways) / 2 - y_belt_anchor_width() / 2 - 5;
 
-Y_motor_end = -base_depth / 2 + y_motor_bracket_width() / 2 + base_clearance;
-Y_idler_end =  base_depth / 2 - y_idler_offset() - base_clearance;
+Y_motor_end = -necessary_base_depth / 2 + y_motor_bracket_width() / 2 + base_clearance;
+Y_idler_end =  necessary_base_depth / 2 - y_idler_offset() - base_clearance;
 Y_belt_anchor_m = Y_motor_end +  NEMA_width(Y_motor) / 2 + Y_travel / 2 + Y_extra_travel / 2;
 Y_belt_anchor_i = Y_idler_end - y_idler_clearance() - Y_travel / 2 - Y_extra_travel / 2;
 Y_belt_end = 20;
@@ -506,7 +506,7 @@ module frame_gantry() {
         // Z bar clamps
         //
         for(end = [idler_end, motor_end])
-            translate([end, gantry_setback, height - base_clearance - bar_clamp_depth / 2])
+            translate([end, gantry_setback, necessary_height - base_clearance - bar_clamp_depth / 2])
                 rotate([0, 90, 90])
                     bar_clamp_holes(Z_bar_dia)
                         frame_screw_hole();

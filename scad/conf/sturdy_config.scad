@@ -23,6 +23,13 @@ Y_travel = 218;
 Y_extra_travel = 0;
 Z_travel = 150;
 
+// If you have sheets cut to bigger than necessary size, you can specify them here
+custom_height = 0;
+custom_base_width = 0;
+custom_base_depth = 0;
+// If you have cutoffs from the sheets which aren't deep enough for the full depth, you can specify the depth here
+custom_stay_depth = 0;
+
 bed_depth = 214;
 bed_width = 214;
 bed_pillars = M3x20_pillar;
