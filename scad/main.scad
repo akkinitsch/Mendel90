@@ -80,9 +80,9 @@ module z_end(motor_end) {
     Z_screw_length = Z0 + Z_travel + anti_backlash_height() + axis_endstop_clearance
         - (Z_motor_length + NEMA_shaft_length(Z_motor) + 2);
 
-    if(!motor_end)
-        translate([-z_bar_offset(), gantry_setback, Z0 - x_end_thickness() / 2])
-            z_limit_switch_assembly();
+    // if(!motor_end)
+    //     translate([-z_bar_offset(), gantry_setback, Z0 - x_end_thickness() / 2])
+    //         z_limit_switch_assembly();
 
     translate([-z_bar_offset(), 0, Z_motor_length]) {
 
@@ -451,18 +451,18 @@ module frame_base() {
         fixing_block_holes();
         y_axis_screw_holes();
 
-        translate([motor_end + z_bar_offset(), 0, 0])               // in case motor has second shaft
-            cylinder(r = 4, h = 100, center = true);
+        // translate([motor_end + z_bar_offset(), 0, 0])               // in case motor has second shaft
+        //     cylinder(r = 4, h = 100, center = true);
 
-        translate([idler_end - z_bar_offset(), 0, 0])
-            cylinder(r = 4, h = 100, center = true);
+        // translate([idler_end - z_bar_offset(), 0, 0])
+        //     cylinder(r = 4, h = 100, center = true);
 
 
-        translate([X_origin, cable_clamp_y,0])
-            ribbon_clamp_holes(bed_ways, base_screw)
-                base_screw_hole();
+        // translate([X_origin, cable_clamp_y,0])
+        //     ribbon_clamp_holes(bed_ways, base_screw)
+        //         base_screw_hole();
 
-        place_cable_clips(true);
+        // place_cable_clips(true);
     }
 }
 
@@ -520,35 +520,35 @@ module frame_gantry() {
         //
         // X ribbon clamp
         //
-        translate([motor_end - x_motor_offset(), gantry_setback, height - base_clearance - ribbon_clamp_width(frame_screw)])
-            ribbon_clamp_holes(x_end_ways, frame_screw)
-                rotate([90, 0, 0])
-                    frame_screw_hole();
+        // translate([motor_end - x_motor_offset(), gantry_setback, height - base_clearance - ribbon_clamp_width(frame_screw)])
+        //     ribbon_clamp_holes(x_end_ways, frame_screw)
+        //         rotate([90, 0, 0])
+        //             frame_screw_hole();
         //
         // Wiring holes
         //
-        translate([idler_end - bar_rail_offset(Z_bar_dia) + 0.5 * bar_clamp_tab,
-                    gantry_setback, height - base_clearance - bar_clamp_depth - endstop_wires_hole_radius - base_clearance])
-            rotate([90, 0, 0])
-                wire_hole(endstop_wires_hole_radius);  // Z top endstop
+        // translate([idler_end - bar_rail_offset(Z_bar_dia) + 0.5 * bar_clamp_tab,
+        //             gantry_setback, height - base_clearance - bar_clamp_depth - endstop_wires_hole_radius - base_clearance])
+        //     rotate([90, 0, 0])
+        //         wire_hole(endstop_wires_hole_radius);  // Z top endstop
 
-        translate([-base_width / 2 + base_clearance + fixing_block_width() + base_clearance + motor_wires_hole_radius,
-                    gantry_setback, motor_wires_hole_radius + hole_edge_clearance])
-            rotate([90, 0, 0])
-                wire_hole(motor_wires_hole_radius);    // Z lhs motor
+        // translate([-base_width / 2 + base_clearance + fixing_block_width() + base_clearance + motor_wires_hole_radius,
+        //             gantry_setback, motor_wires_hole_radius + hole_edge_clearance])
+        //     rotate([90, 0, 0])
+        //         wire_hole(motor_wires_hole_radius);    // Z lhs motor
 
-        translate([max(motor_end + bar_rail_offset(Z_bar_dia),
-                       base_width / 2 - right_w + fixing_block_width() + 2 * base_clearance + motor_wires_hole_radius),
-                    gantry_setback, motor_wires_hole_radius + hole_edge_clearance])
-            rotate([90, 0, 0])
-                wire_hole(motor_wires_hole_radius);    // Z rhs motor
+        // translate([max(motor_end + bar_rail_offset(Z_bar_dia),
+        //                base_width / 2 - right_w + fixing_block_width() + 2 * base_clearance + motor_wires_hole_radius),
+        //             gantry_setback, motor_wires_hole_radius + hole_edge_clearance])
+        //     rotate([90, 0, 0])
+        //         wire_hole(motor_wires_hole_radius);    // Z rhs motor
 
-        translate([idler_end - bar_rail_offset(Z_bar_dia),
-                    gantry_setback, Z_motor_length + z_motor_bracket_height() + endstop_wires_hole_radius])
-            rotate([90, 0, 0])
-                wire_hole(endstop_wires_hole_radius);  // bottom limit switch
+        // translate([idler_end - bar_rail_offset(Z_bar_dia),
+        //             gantry_setback, Z_motor_length + z_motor_bracket_height() + endstop_wires_hole_radius])
+        //     rotate([90, 0, 0])
+        //         wire_hole(endstop_wires_hole_radius);  // bottom limit switch
 
-        place_cable_clips(true);
+        // place_cable_clips(true);
     }
 }
 
@@ -620,16 +620,16 @@ module frame_stay(left, bodge = 0) {
         //                 wire_hole(thermistor_wires_hole_radius); // Bed thermistor wires
         //     }
         // }
-        translate([x, gantry_setback + sheet_thickness(frame) + endstop_wires_hole_radius + hole_edge_clearance, z_gantry_wire_height]) {
-            translate([0, 0, cable_clip_offset(frame_clip_screw, endstop_wires)])
-                rotate([0, 90, 0])
-                    wire_hole(endstop_wires_hole_radius);           // Z endstop wires
+        // translate([x, gantry_setback + sheet_thickness(frame) + endstop_wires_hole_radius + hole_edge_clearance, z_gantry_wire_height]) {
+        //     translate([0, 0, cable_clip_offset(frame_clip_screw, endstop_wires)])
+        //         rotate([0, 90, 0])
+        //             wire_hole(endstop_wires_hole_radius);           // Z endstop wires
 
-            translate([0, fan_motor_wires_hole_radius - endstop_wires_hole_radius,
-                      -cable_clip_offset(frame_clip_screw, fan_motor_wires)])
-                rotate([0, 90, 0])
-                    wire_hole(fan_motor_wires_hole_radius);         // Z  motor wires
-        }
+        //     translate([0, fan_motor_wires_hole_radius - endstop_wires_hole_radius,
+        //               -cable_clip_offset(frame_clip_screw, fan_motor_wires)])
+        //         rotate([0, 90, 0])
+        //             wire_hole(fan_motor_wires_hole_radius);         // Z  motor wires
+        // }
     }
 }
 
