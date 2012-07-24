@@ -95,7 +95,7 @@ axis_endstop_clearance = 2;     // how close we get to the end of an axis
 X_carriage_clearance = 2;       // how close the X carriage is to the XZ plane
                                 // how close the Y carriage is to the window in the XZ plane
 Y_carriage_clearance = 2 + bulldog_handle_length(small_bulldog) - (Y_carriage_width - bed_width) / 2;
-Z_clearance = 10;               // How close the top of the object gets to the gantry
+Z_clearance = 30;               // How close the top of the object gets to the gantry
 belt_clearance = 0.2;           // clearance of belt clamp slots
 
 pulley_inner_radius = (14.4 / 2) - belt_thickness(T5x6); // measured from outer diameter

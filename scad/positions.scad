@@ -33,7 +33,7 @@ base_width = max(custom_base_width, necessary_base_width);
 necessary_base_depth = Y_travel + Y_carriage_depth + 2 * base_clearance + 2 * axis_endstop_clearance;
 base_depth = max(custom_base_depth, necessary_base_depth);
 
-window_width = ceil(Y_carriage_width + Y_carriage_clearance * 2);
+window_width = ceil(X_travel + Y_carriage_clearance * 2);
 necessary_stay_depth = stays_from_window ? window_width / 2 : base_depth / 2 - (gantry_setback + sheet_thickness(frame));
 stay_depth = custom_stay_depth > 0 ? min(custom_stay_depth, necessary_stay_depth) : necessary_stay_depth;
 stay_height =  single_piece_frame && !stays_from_window ? height : height - gantry_thickness - 1;
