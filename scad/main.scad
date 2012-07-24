@@ -513,6 +513,10 @@ module frame_gantry() {
                 rotate([0, 90, 90])
                     bar_clamp_holes(Z_bar_dia)
                         frame_screw_hole();
+        translate([idler_end, gantry_setback, necessary_height - 100 - base_clearance - bar_clamp_depth / 2])
+            rotate([0, 90, 90])
+                bar_clamp_holes(Z_bar_dia)
+                    frame_screw_hole();
 
         //
         // Z motor bracket holes
