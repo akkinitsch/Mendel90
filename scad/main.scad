@@ -194,7 +194,7 @@ cable_clamp_y = Y_carriage_depth / 2 - ribbon_clamp_width(cap_screw);
 
 module y_carriage() {
     difference() {
-        sheet(Y_carriage, Y_carriage_width, Y_carriage_depth, [3,3,3,3]);
+        sheet(Y_carriage, 220, 220, [3,3,3,3]);
 
         translate([0, cable_clamp_y, 0])
             rotate([180, 0, 0])
