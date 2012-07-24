@@ -780,3 +780,5 @@ echo("Width: ", base_width, " Depth: ", base_depth, " Height: ", height + sheet_
 echo(left_w, window_width, right_w);
 
 echo("X bar: ",  X_bar_length, " Y Bar 1: ", Y_bar_length, " Y Bar 2: ", Y_bar_length2, " Z Bar: ", Z_bar_length);
+
+echo("Window width: ", window_width, " Window height: ", height - gantry_thickness);
