@@ -12,7 +12,7 @@ use <x-carriage.scad>
 use <x-end.scad>
 
 
-Y_carriage_height = y_motor_bracket_height() + X_carriage_clearance + sheet_thickness(Y_carriage) / 2;
+Y_carriage_height = y_motor_bracket_height() + X_carriage_clearance + sheet_thickness(Y_carriage) / 2 + Y_carriage_bottom_clearance;
 
 bed_height =  Y_carriage_height + sheet_thickness(Y_carriage) / 2 + pillar_height(bed_pillars) + washer_thickness(M3_washer) + bed_thickness;
 

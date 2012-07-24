@@ -16,34 +16,34 @@ foot = 5;
 holes = tab / 2 + 1;
 
 function y_motor_bracket_height() = round(NEMA_width(Y_motor)) + 2;
-function y_motor_height() = y_motor_bracket_height() / 2;
+function y_motor_height() = y_motor_bracket_height() / 2 + Y_carriage_bottom_clearance;
 function y_motor_bracket_width() = y_motor_bracket_height() + 2 * (tab + thickness);
 function y_motor_bracket_top_width() = y_motor_bracket_width() - 2 * tab;
 
 depth = y_motor_bracket_height() + thickness - foot;
 
 module y_motor_bracket() {
-    height = y_motor_bracket_height();
+    height = y_motor_bracket_height() + Y_carriage_bottom_clearance;
     width = y_motor_bracket_width();
 
     stl("y_motor_bracket");
         color(y_motor_bracket_color) {
             difference() {
-                translate([0, 0, thickness - depth / 2])                    // main body
+                translate([0, - Y_carriage_bottom_clearance / 2, thickness - depth / 2])                    // main body
                     cube([width, height, depth], center = true);
 
                 cylinder(r = NEMA_big_hole(Y_motor), h = thickness * 2 + 1, center = true);   // hole for stepper locating boss
 
-                translate([0, 0, - depth / 2])
+                translate([0, - Y_carriage_bottom_clearance / 2, - depth / 2])
                     cube([depth, height + 1, depth], center = true);        // space for motor
 
-                translate([-width / 2, foot, 0])
+                translate([-width / 2, foot - Y_carriage_bottom_clearance / 2, 0])
                     cube([tab * 2,  height, depth * 2], center = true);     // cut outs for lugs
 
-                translate([width / 2, foot, 0])
+                translate([width / 2, foot - Y_carriage_bottom_clearance / 2, 0])
                     cube([tab * 2,  height, depth * 2], center = true);
 
-                translate([0, - height / 2 + foot, - depth + thickness])    // sloping sides
+                translate([0, - y_motor_bracket_height() / 2 + foot, - depth + thickness])    // sloping sides
                     rotate([45,0,0])
                         translate([0,0, - depth / 2])
                             cube([width, 3 * height, depth], center = true);
@@ -57,7 +57,7 @@ module y_motor_bracket() {
                 //
                 for(side = [-1, 1])
                     for(z = [thickness - depth + holes, thickness - holes])
-                        translate([side * (width / 2 - tab / 2), - height / 2, z])
+                        translate([side * (width / 2 - tab / 2), - height / 2 - Y_carriage_bottom_clearance / 2, z])
                             rotate([-90, 0, 0]) teardrop_plus(r = screw_clearance_radius(base_screw), h = foot * 2 + 1, center = true);
             }
         }
@@ -66,7 +66,7 @@ module y_motor_bracket() {
 module y_motor_bracket_holes()
     for(side = [-1, 1])
         for(z = [thickness - depth + holes, thickness - holes])
-            translate([side * (y_motor_bracket_width() / 2 - tab / 2), -y_motor_bracket_height() / 2 + foot, z])
+            translate([side * (y_motor_bracket_width() / 2 - tab / 2), -y_motor_bracket_height() / 2 + foot - Y_carriage_bottom_clearance / 2, z])
                 rotate([-90, 0, 0])
                     child();
 

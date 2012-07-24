@@ -23,6 +23,8 @@ Y_travel = 140;
 // Extra travel distance on Y by moving the bearing holders further in on bed
 Y_extra_travel = 0;
 Z_travel = 110;
+// You can increase the distance between the base and the bed with this
+Y_carriage_bottom_clearance = 0;
 
 // If you have sheets cut to bigger than necessary size, you can specify them here
 custom_height = 0;
