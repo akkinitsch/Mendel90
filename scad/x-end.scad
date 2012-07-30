@@ -114,8 +114,8 @@ switch_op_z = x_carriage_offset() - x_carriage_thickness() / 2; // hit the edge 
 sbracket_top = switch_op_z + 12;
 sbracket_height = sbracket_top + thickness / 2;
 sbracket_depth = switch_op_x - 3 - front;
-sbracket_thickness = bar_y - (X_bar_dia / 2) * sin(45) - bearing_width / 2 - 1.5 - microswitch_thickness();
-sbracket_y = -bearing_width / 2 - 1 - sbracket_thickness / 2;
+sbracket_thickness = bar_y - (X_bar_dia / 2) * sin(45) - bearing_width / 2 - 0.5 + eta - microswitch_thickness();
+sbracket_y = -bearing_width / 2 + eta - sbracket_thickness / 2;
 
 function x_motor_offset() = back - mbracket_thickness - motor_w / 2;
 function x_motor_overhang() = back - mbracket_width;
@@ -484,7 +484,7 @@ module x_end_bracket(motor_end, assembly = false){
             // limit switch bracket
             //
             difference() {
-                translate([front - eta, sbracket_y, - thickness / 2])
+                translate([front - eta, sbracket_y, - thickness / 2 + eta])
                     rotate([90, 0, 0])
                         linear_extrude(height = sbracket_thickness, center = true)
                             polygon([
@@ -541,6 +541,12 @@ module x_end_bracket(motor_end, assembly = false){
             cube([bearing_width*2,bearing_width,bearing_height], center=true);
         translate([0,-bearing_width - 1,bearing_height / 2 - thickness / 2])
             cube([bearing_width*2,bearing_width,bearing_height], center=true);
+        translate([bearing_width/2 + 2 + eta,0,bearing_height / 2 - thickness / 2])
+            cube([bearing_width,bearing_width*2,bearing_height], center=true);
+    }
+    if(motor_end) {
+        translate([-2, sbracket_y + sbracket_thickness / 2 - zipslot_thickness/2 + eta, zipslot[0]])
+            cube([bearing_width*0.75,zipslot_thickness,zipslot_width], center=true);
     }
     }
 }
