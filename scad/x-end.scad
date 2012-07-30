@@ -136,6 +136,11 @@ zipslot = [
         - thickness/2 + shelf_thickness + bearing_length/2 + zipslot_width/2),
     bearing_height - bearing_length/2 - thickness/2 - zipslot_width];
 
+cable_tube_diameter = 17;
+cable_tube_holder_width = default_wall * 2 + cable_tube_diameter;
+cable_tube_holder_height = default_wall + cable_tube_diameter;
+cable_tube_holder_thickness = default_wall * 1.5;
+
 function anti_backlash_height() = 24 + thickness / 2;
 anti_backlash_radius = Z_nut_radius + 0.2;
 anti_backlash_wall = 3;
@@ -319,6 +324,13 @@ module x_end_bracket(motor_end, assembly = false){
                             rotate([90, 0, 0])
                                 right_triangle(width = 4, height = 4, h = mbracket_depth - eta, center = true);
                     }
+                    translate([back - cable_tube_holder_width, mbracket_front - mbracket_thickness, mbracket_height - thickness / 2 - eta])
+                        difference() {
+                            cube([cable_tube_holder_width, cable_tube_holder_thickness, cable_tube_diameter/4*3]);
+                            translate([cable_tube_diameter/2 + default_wall, cable_tube_holder_thickness + 0.5, cable_tube_diameter/2 + eta])
+                                rotate([90,0,0])
+                                    teardrop(r=cable_tube_diameter/2, h = cable_tube_holder_thickness + 1);
+                        }
                 }
                 //
                 // Slits to leave clamp free
