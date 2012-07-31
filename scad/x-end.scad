@@ -107,6 +107,7 @@ mbracket_height = thickness / 2 + NEMA_radius(X_motor) + mbracket_thickness;
 mbracket_front = belt_edge + 14;
 mbracket_depth = NEMA_length(X_motor) + 2 * mbracket_thickness + 1;
 mbracket_centre = mbracket_front + mbracket_depth / 2 - mbracket_thickness;
+mbracket_cutout_height = mbracket_height/2 - 4 - mbracket_thickness/2;
 
 switch_op_x = Z_bearings[1] / 2 + 2;                            // switch operates 2mm before carriage hits the bearing
 switch_op_z = x_carriage_offset() - x_carriage_thickness() / 2; // hit the edge of the carriage
@@ -379,12 +380,6 @@ module x_end_bracket(motor_end, assembly = false){
                         rotate([90,0,0])
                             vertical_tearslot(r = NEMA_big_hole(X_motor), h = 2 * mbracket_thickness + 1, l = 50, center = true);
                     //
-                    // small hole for second shaft
-                    //
-                    translate([0, mbracket_depth - mbracket_thickness, -50/2])
-                        rotate([90,0,0])
-                            vertical_tearslot(r = 4, h = 2 * mbracket_thickness + 1, l = 50, center = true);
-                    //
                     // Mounting holes
                     //
                     for(x = NEMA_holes(X_motor))                                                         // motor screw holes
@@ -422,7 +417,55 @@ module x_end_bracket(motor_end, assembly = false){
                 translate([back, -bearing_width / 2 - 3, thickness / 2 + 10])
                     rotate([90, 0, 90])
                         teardrop(r = 3, h = 2 * mbracket_thickness + 1, center = true);
-
+                //
+                // Holes to limit material usage
+                //
+                translate([back - mbracket_width + mbracket_thickness/2 - 0.5, mbracket_centre, 2 + thickness / 2]) {
+                    translate([0,-mbracket_depth / 2 + mbracket_thickness + 1, - mbracket_height/2 + 5])
+                        rotate([0, -90, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    translate([0,-mbracket_depth / 2 + mbracket_thickness + 1,mbracket_height/2 - 5])
+                        rotate([0, 90, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    translate([0,mbracket_depth / 2 - mbracket_thickness - 1, - mbracket_height/2 + 5])
+                        rotate([180, -90, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    translate([0,mbracket_depth / 2 - mbracket_thickness - 1,mbracket_height/2 - 5])
+                        rotate([180, 90, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    rotate([45, 0, 0])
+                        cube([2 * mbracket_thickness + 1, (mbracket_height - 5 - mbracket_thickness) / sqrt(2),  (mbracket_height - 5 - mbracket_thickness) / sqrt(2)], center = true);
+                }
+                translate([back - mbracket_width/2, mbracket_centre + mbracket_depth/2, 2 + thickness / 2]) {
+                    translate([-mbracket_width/2 + mbracket_thickness + 1, 0, - mbracket_height/2 + 5])
+                        rotate([90, 0, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    translate([-mbracket_width/2 + mbracket_thickness + 1, 0, mbracket_height/2 - 5])
+                        rotate([-90, 0, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    translate([mbracket_width/2 - mbracket_thickness - 1, 0, mbracket_height/2 - 5])
+                        rotate([90, 180, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    translate([mbracket_width/2 - mbracket_thickness - 1, 0, - mbracket_height/2 + 5])
+                        rotate([-90, 180, 0])
+                            right_triangle(width=mbracket_cutout_height, height=mbracket_cutout_height, h = 2 * mbracket_thickness + 1, center = true);
+                    rotate([0, 45, 0])
+                        cube([(mbracket_height - 5 - mbracket_thickness) / sqrt(2),  2 * mbracket_thickness + 1, (mbracket_height - 5 - mbracket_thickness) / sqrt(2)], center = true);
+                }
+                translate([back - mbracket_width/2, mbracket_centre - mbracket_depth/2 + mbracket_thickness/2, 2 + thickness / 2]) {
+                    difference() {
+                        union() {
+                            translate([-mbracket_width/2 + 10 + mbracket_thickness, 0, mbracket_height/4 - mbracket_thickness])
+                                cube([20, 2 * mbracket_thickness + 1, mbracket_height/2], center = true);
+                            translate([+mbracket_width/2 - 10 - mbracket_thickness, 0, mbracket_height/4 - mbracket_thickness])
+                                cube([20, 2 * mbracket_thickness + 1, mbracket_height/2], center = true);
+                        }
+                        translate([0, 0, -5])
+                            scale([0.9, 1.1, 1])
+                                rotate([0, 45, 0])
+                                    cube([mbracket_height / sqrt(2),  2 * mbracket_thickness + 2, mbracket_height / sqrt(2)], center = true);
+                    }
+                }
             }
             //
             // limit switch bracket
