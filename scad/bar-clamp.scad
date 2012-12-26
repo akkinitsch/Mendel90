@@ -124,9 +124,11 @@ module bar_clamp(d, h, w, switch = false, yaxis = false) {
                             mirror([0,1,0]) rotate([0, 90, 90])
                                 microswitch_holes();
 
-                        translate([0, - 0.5 * bar_clamp_tab - 0.5,0]) // screwdriver access
-                            rotate([0,0,90])
-                                teardrop(h = 100, r = 3, center = true, truncate = false);
+                        if (sheet_is_soft(base) || Y_carriage_bottom_clearance < 5) {
+                            translate([0, - 0.5 * bar_clamp_tab - 0.5,0]) // screwdriver access
+                                rotate([0,0,90])
+                                    teardrop(h = 100 + Y_carriage_bottom_clearance, r = 3, center = true, truncate = false);
+                        }
                     }
                 }
             }
