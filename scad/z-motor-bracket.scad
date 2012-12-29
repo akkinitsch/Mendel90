@@ -49,12 +49,11 @@ module z_motor_bracket(y_offset, rhs) {
                                 cube([length + 1, width, back_height], center = true);
                         }
                     //
-                    // Bracing webs
+                    // Bracing
                     //
-                    for(x = [length / 2 - 2 * slot_inset - thickness / 2, -(length / 2 - 2 * slot_inset - thickness / 2)])
-                        translate([x, y_offset - back_thickness + eta, eta])
-                            rotate([90, 0, -90])
-                                right_triangle(width = y_offset - big_hole, height = back_height, h = thickness);
+                    translate([0, y_offset - back_thickness + eta, eta])
+                        rotate([90, 0, -90])
+                            right_triangle(width = y_offset - big_hole, height = back_height, h = length - 4 * slot_inset);
                     //
                     // bar clamp
                     //
@@ -71,11 +70,6 @@ module z_motor_bracket(y_offset, rhs) {
                 translate([ length / 2, - length / 2, thickness / 2])
                     rotate([0,0, 90])
                         fillet(r = corner_rad, h = thickness + 1);
-                //
-                // Cut out between webs
-                //
-                translate([0, length / 2 + cutout / 2, thickness / 2])
-                    rounded_rectangle([length - 4 * slot_inset - 2 * thickness, cutout, thickness + 1], r = corner_rad / 2, center = true);
                 //
                 // motor holes
                 //

@@ -42,7 +42,7 @@ bar_x = (length - bearing_holder_length(X_bearings)) / 2;
 tooth_height = belt_thickness(X_belt) / 2;
 tooth_width = belt_pitch(X_belt) / 2;
 
-lug_width = 2.5 * belt_pitch(X_belt);
+lug_width = max(2.5 * belt_pitch(X_belt), 2 * (M3_nut_radius + 2));
 lug_depth = X_carriage_clearance + belt_width(X_belt) + belt_clearance + M3_clearance_radius + lug_width / 2;
 lug_screw = -(X_carriage_clearance + belt_width(X_belt) + belt_clearance + M3_clearance_radius);
 slot_y =  -X_carriage_clearance - (belt_width(X_belt) + belt_clearance) / 2;
@@ -229,6 +229,32 @@ module x_belt_tensioner_stl()
     }
 }
 
+part_fan = fan60x15;
+duct_wall = 2 * 0.35 * 1.5;
+top_thickness = 2;
+fan_nut_trap_thickness = 4;
+fan_bracket_thickness = 3;
+
+fan_screw = fan_screw(part_fan);
+fan_nut = screw_nut(fan_screw);
+fan_washer = screw_washer(fan_screw);
+fan_screw_length = screw_longer_than(fan_depth(part_fan) + fan_bracket_thickness + fan_nut_trap_thickness + nut_thickness(fan_nut, true) + washer_thickness(fan_washer));
+
+front_nut_width = 2 * nut_radius(M3_nut) + wall;
+front_nut_height = 2 * nut_radius(M3_nut) * cos(30) + wall;
+front_nut_depth = wall + nut_trap_depth(M3_nut);
+front_nut_pitch = (bar_x - bearing_holder_length(X_bearings) / 2 - nut_radius(M3_nut) - 0.3);
+front_nut_z = 3;
+front_nut_y = - width / 2 + wall;
+
+gap = 4;
+taper_angle = 30;
+nozzle_height = 5;
+duct_height = 15;
+duct_wall = 2 * 0.35 * 1.5;
+skew = nozzle_height * tan(taper_angle);
+top_thickness = 2;
+
 
 bearing_gap = 5;
 bearing_slit = 1;
@@ -304,16 +330,17 @@ module x_carriage_stl(){
 
                                         }
                             }
-                            // ribs
-                            for(end = [-1,1])
-                                linear_extrude(height = rim_thickness, center = true, convexity = 5)
-                                    hull() {
-                                        translate([0, bar_y - bearing_holder_width(X_bearings) / 2 - bearing_slit- wall])
-                                            circle(r = wall, center = true);
+                            // ribs between bearing holders
+                            for(side = [-1,1])
+                                assign(rib_height = bar_offset - X_bar_dia / 2 - 2)
+                                translate([0, - bar_y + side * (bearing_holder_width(X_bearings) / 2 - (wall + eta) / 2), rib_height / 2 - top_thickness + eta])
+                                    cube([2 * bar_x - bearing_holder_length(X_bearings) + eta, wall + eta, rib_height], center = true);
 
-                                        translate([end * bar_x, -bar_y + bearing_holder_width(X_bearings) / 2])
-                                            circle(r = wall, center = true);
-                                        }
+                            // Front nut traps for large fan mount
+                            for(end = [-1, 1])
+                                translate([end * (bar_x - bearing_holder_length(X_bearings) / 2 - front_nut_width / 2 + eta) - front_nut_width / 2,
+                                            -width / 2 + wall, -top_thickness - eta])
+                                     cube([front_nut_width, front_nut_depth, front_nut_height]);
                         }
                         //Holes for bearing holders
                         translate([0,        bar_y, rim_thickness - top_thickness - eta])
@@ -367,10 +394,23 @@ module x_carriage_stl(){
                     }
             }
             //
+            //
             // Belt grip dowel hole
             //
             translate([-length / 2 + lug_width / 2, -width / 2 + dowel / 2, -top_thickness])
                 cylinder(r = dowel / 2 + 0.1, h = dowel_height * 2, center = true);
+            //
+            // Front mounting nut traps for fan assemblies
+            //
+            for(end = [-1, 1])
+                translate([end * front_nut_pitch,
+                           -width / 2 + front_nut_depth,
+                           front_nut_z])
+                    rotate([90, 0, 0])
+                        intersection() {
+                            nut_trap(screw_clearance_radius(M3_cap_screw), M3_nut_radius, M3_nut_trap_depth, true);
+                            cylinder(r = M3_nut_radius + 1, h = bearing_holder_width(X_bearings), center = true);
+                        }
         }
 }
 

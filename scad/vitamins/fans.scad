@@ -7,7 +7,9 @@
 // based on http://www.thingiverse.com/thing:8063 by MiseryBot, CC license
 
 fan80x38 = [80, 38, 75, 35.75, M4_cap_screw, 40,   4.3, 84];
-fan60x25 = [60, 25, 57, 25,    M3_cap_screw, 31.5, 3.6, 64];
+fan60x25 = [60, 25, 57, 25,    M4_cap_screw, 31.5, 3.6, 64];
+fan60x15 = [60, 15, 57, 25,    M4_cap_screw, 29,   2.4, 60];
+fan30x10 = [30, 10, 27, 12,    M3_cap_screw, 17,   10, 100];
 
 function fan_width(type)          = type[0];
 function fan_depth(type)          = type[1];
