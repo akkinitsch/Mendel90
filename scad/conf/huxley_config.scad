@@ -18,6 +18,8 @@ X_motor = NEMA14;
 Y_motor = NEMA14;
 Z_motor = NEMA14;
 
+hot_end = JHeadMk4;
+
 X_travel = 140;
 Y_travel = 140;
 // Extra travel distance on Y by moving the bearing holders further in on bed
