@@ -13,8 +13,8 @@ use <z-coupling.scad>
 
 corner_rad = 5;
 length = ceil(NEMA_width(Z_motor));
-thickness = 4;
-back_thickness = 5;
+thickness = 8;
+back_thickness = 8;
 back_height = 24;
 big_hole = NEMA_big_hole(Z_motor);
 clamp_height = washer_diameter(washer) + 3;
