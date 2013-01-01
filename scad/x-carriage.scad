@@ -30,7 +30,10 @@ base_offset = nozzle_x_offset();      // offset of base from centre
 bar_offset = ceil(max(X_bearings[2] / 2 + rim_thickness + 1,                     // offset of carriage origin from bar centres
                  nut_radius(M3_nut) * 2 + belt_thickness(X_belt) + pulley_inner_radius + 6 * layer_height));
 
-mounting_holes = [67, 90, 113, 247, 270, 293];
+mounting_holes = [
+    [-25, 0], [25, 0],
+    [25 * sin(67), 25 * cos(67)], [25 * sin(247), 25 * cos(247)],
+    [25 * sin(113), 25 * cos(113)], [25 * sin(293), 25 * cos(293)]];
 
 function x_carriage_offset() = bar_offset;
 function x_bar_spacing() = hole + bearing_holder_width(X_bearings);
@@ -524,8 +527,8 @@ module x_carriage_stl(){
                         cube([bearing_holder_length(X_bearings) + 2 * bearing_gap + 1, min_wall, rim_thickness], center = true);
 
                 // raised section for nut traps
-                for(a = mounting_holes)
-                    translate([25 * sin(a) - base_offset, 25 * cos(a), (nut_trap_thickness - top_thickness) / 2])
+                for(xy = mounting_holes)
+                    translate([xy[0] - base_offset, xy[1], (nut_trap_thickness - top_thickness) / 2])
                         cylinder(r = 7, h = nut_trap_thickness - top_thickness, center = true);
 
                 // belt lugs
@@ -548,13 +551,10 @@ module x_carriage_stl(){
                     rounded_rectangle([hole, hole_width, 2 * rim_thickness], corner_radius);
 
                 // holes for connecting extruder
-                for(a = mounting_holes)
-                    translate([25 * sin(a), 25 * cos(a), nut_trap_thickness - top_thickness]) {
-                        *cylinder(h = nut_trap_thickness, r = 7);
-                        rotate([0,0,-a])
-                            //nut_trap(M4_clearance_radius, M4_nut_radius, M4_nut_trap_depth);
-                            poly_cylinder(r = M4_clearance_radius, h = 50, center = true);
-                    }
+                for(xy = mounting_holes)
+                    translate([xy[0], xy[1], nut_trap_thickness - top_thickness + M4_nut_trap_depth + 1])
+                        nut_trap(M4_clearance_radius, M4_nut_radius, M4_nut_trap_depth);
+
             }
             //
             // Belt grip dowel hole
