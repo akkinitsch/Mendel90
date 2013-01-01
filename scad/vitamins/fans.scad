@@ -9,6 +9,7 @@
 fan80x38 = [80, 38, 75, 35.75, M4_cap_screw, 40,   4.3, 84];
 fan60x25 = [60, 25, 57, 25,    M4_cap_screw, 31.5, 3.6, 64];
 fan60x15 = [60, 15, 57, 25,    M4_cap_screw, 29,   2.4, 60];
+fan40x10 = [40, 10, 38, 16,    M3_cap_screw, 26,   10,  40];
 fan30x10 = [30, 10, 27, 12,    M3_cap_screw, 17,   10, 100];
 
 function fan_width(type)          = type[0];
