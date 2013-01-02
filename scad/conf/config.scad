@@ -65,7 +65,7 @@ M8_nut_radius = 15.4 / 2;
 M8_nut_depth = 6.5;
 
 cnc_tool_dia = 2.4;
-layer_height = 0.4;
+layer_height = 0.5;
 filament_width = layer_height * 1.5;
 min_wall = 2 * filament_width + eta;
 part_base_thickness = 5;;           // The thickness of things screwed to the frame
