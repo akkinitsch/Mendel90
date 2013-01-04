@@ -53,7 +53,7 @@ module y_belt_anchor(height, toothed) {
                     for(end = [-1, 1])
                         translate([side * (M3_nut_radius + wall / 2), eta + (end + 1) * (depth / 2 - 2 * eta), thickness - eta])
                             rotate([90,0,90 * end])
-                                right_triangle(width = (length - depth) / 2 - rad, height = h - thickness, h = wall);
+                                right_triangle(width = (length - depth) / 2 - rad, height = h - thickness, h = wall - eta);
             }
 
 
