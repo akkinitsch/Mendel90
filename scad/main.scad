@@ -730,7 +730,7 @@ module machine_assembly() {
         // bed_fan_assembly();
         // electronics_assembly();
 
-        x_axis_assembly(false);
+        x_axis_assembly(true);
         z_axis_assembly();
         y_axis_assembly(show_bed);
         //

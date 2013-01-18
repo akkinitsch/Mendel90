@@ -507,6 +507,6 @@ module wades_extruder_stl() {
 
 if(1)
     rotate([90, 0, 0])
-        wades_assembly(true);
+        wades_assembly(false);
 else
     wades_extruder_stl();
