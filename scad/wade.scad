@@ -106,7 +106,8 @@ module wades_block_stl() {
                     union() {
                         for(a = [-90, 90])
                             rotate([a, 0, 0])
-                                teardrop(r = 10.6, h = base_thickness, truncate = false, center = true);
+                                translate([0, -eta, 0])
+                                    teardrop(r = 10.6, h = base_thickness, truncate = false, center = true);
                     }
                     cube([22, base_thickness + 1, width], center = true);
                 }
@@ -206,7 +207,7 @@ module wades_block_stl() {
                 if(hot_end_groove_mount(hot_end)) assign(relief = 0.5) {
 
                     translate([0, 0, -insulator_depth + jhead_groove_offset() / 2 + eta])         // slot for the flange
-                        keyhole(insulator / 2, jhead_groove_offset(), width - filament_z);
+                        keyhole(insulator / 2, jhead_groove_offset() + eta, width - filament_z);
 
                     translate([0, 0, -insulator_depth + relief / 2])
                         keyhole(insulator / 2 + 0.5, relief, width - filament_z);           // relief to avoid corner radius
@@ -224,7 +225,7 @@ module wades_block_stl() {
 
                                         assign(w = nut_flat_radius(screw_nut(jhead_screw)))
                                         rotate([0, 0, [-90 ,0, 180][i]])
-                                            translate([-w, 0, -jhead_nut_slot / 2])
+                                            translate([-w, 0, -jhead_nut_slot / 2 - eta])
                                                 cube([w * 2, 100, jhead_nut_slot], center = false);
 
                                     }
