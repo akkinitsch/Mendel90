@@ -501,7 +501,7 @@ module wades_extruder_stl() {
         *translate([0, driven_y, -1])
             cube(100);
     }
-    translate([96, driven_y + 1, 0]) rotate([0,0,90]) wades_idler_block_stl();
+    translate([97, driven_y + 1, 0]) rotate([0,0,90]) wades_idler_block_stl();
     translate([motor_max, motor_y, 0]) wades_gear_spacer_stl();
 }
 
