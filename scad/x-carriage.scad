@@ -276,6 +276,7 @@ hot_end_fan_x = bearing_holder_length(X_bearings) + fan_width(hot_end_fan)/2;
 hot_end_fan_y = -bar_y + bearing_holder_width(X_bearings)/2 + fan_width(hot_end_fan)/2 + ziptie_thickness(small_ziptie) + 1;
 hot_end_fan_z = fan_depth(hot_end_fan)/2 + rim_thickness + hot_end_fan_duct_thickness;
 hot_end_fan_distance = hot_end_fan_x - 23/2;
+hot_end_fan_duct_hole = 1;
 
 module throat(inner) {
     y = or + skew - duct_wall;
@@ -645,14 +646,23 @@ module x_carriage_hotend_fan_duct_stl() {
                                     r=hot_end_fan_duct_thickness - hot_end_fan_duct_wall_thickness,
                                     h=hot_end_fan_distance+1);
                         }
-                        translate([mounting_holes[2][0] - hot_end_fan_x, mounting_holes[2][1] - hot_end_fan_y + 19, - hot_end_fan_duct_thickness - 1])
-                            cylinder(r = M4_clearance_radius + 20, h = hot_end_fan_duct_thickness + 2);
+                        if (hot_end_fan_duct_hole == 1)
+                            translate([mounting_holes[1][0] - hot_end_fan_x - 1, mounting_holes[1][1] - hot_end_fan_y, - hot_end_fan_duct_thickness - 1])
+                                intersection() {
+                                    translate([0, 4.5, 0])
+                                        cylinder(r = M4_clearance_radius + 6, h = hot_end_fan_duct_thickness + 2);
+                                    translate([0, -4.5, 0])
+                                        cylinder(r = M4_clearance_radius + 6, h = hot_end_fan_duct_thickness + 2);
+                                }
+                        if (hot_end_fan_duct_hole == 2)
+                            translate([mounting_holes[2][0] - hot_end_fan_x, mounting_holes[2][1] - hot_end_fan_y + 19, - hot_end_fan_duct_thickness - 1])
+                                cylinder(r = M4_clearance_radius + 20, h = hot_end_fan_duct_thickness + 2);
                     }
                 }
                 translate([-hot_end_fan_distance, -20 + corner_radius, -eta])
                     cube([hot_end_fan_distance - fan_width(hot_end_fan)/2, 30 - corner_radius, hot_end_fan_duct_wall_thickness]);
             }
-            translate([mounting_holes[2][0] - hot_end_fan_x, mounting_holes[2][1] - hot_end_fan_y, - hot_end_fan_duct_thickness - 1])
+            translate([mounting_holes[hot_end_fan_duct_hole][0] - hot_end_fan_x, mounting_holes[hot_end_fan_duct_hole][1] - hot_end_fan_y, - hot_end_fan_duct_thickness - 1])
                 poly_cylinder(r = M4_clearance_radius, h = hot_end_fan_duct_thickness + 10);
             translate([0, 0, -fan_depth(hot_end_fan)/2 - hot_end_fan_duct_thickness - 2])
                 fan_hole_positions(hot_end_fan)
