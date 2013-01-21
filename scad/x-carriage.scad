@@ -272,7 +272,7 @@ hot_end_fan = fan40x10;
 hot_end_fan_duct_thickness = 10;
 hot_end_fan_duct_wall_thickness = 2;
 
-hot_end_fan_x = bearing_holder_length(X_bearings) + fan_width(hot_end_fan)/2;
+hot_end_fan_x = bearing_holder_length(X_bearings) + fan_width(hot_end_fan)/2 + 1.5;
 hot_end_fan_y = -bar_y + bearing_holder_width(X_bearings)/2 + fan_width(hot_end_fan)/2 + ziptie_thickness(small_ziptie) + 1;
 hot_end_fan_z = fan_depth(hot_end_fan)/2 + rim_thickness + hot_end_fan_duct_thickness;
 hot_end_fan_distance = hot_end_fan_x - 23/2;
