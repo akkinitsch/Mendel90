@@ -692,10 +692,10 @@ module x_carriage_assembly(show_extruder = true, show_fan = false) {
                     wingnut(M4_wingnut);
     }
     // cylinder(r = 23/2, h = 50);
-    translate([mounting_holes[2][0], mounting_holes[2][1], nut_trap_thickness + hot_end_fan_duct_thickness + hot_end_fan_duct_wall_thickness])
-        rotate([0, 0, 45])
+    translate([mounting_holes[1][0], mounting_holes[1][1], nut_trap_thickness + hot_end_fan_duct_thickness + hot_end_fan_duct_wall_thickness])
+        rotate([0, 0, 0])
             wingnut(M4_wingnut);
-    translate([mounting_holes[3][0], mounting_holes[3][1], nut_trap_thickness])
+    translate([mounting_holes[0][0], mounting_holes[0][1], nut_trap_thickness])
         rotate([0, 0, 45])
             wingnut(M4_wingnut);
     translate([hot_end_fan_x, hot_end_fan_y, hot_end_fan_z])
