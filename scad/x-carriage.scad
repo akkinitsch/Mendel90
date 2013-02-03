@@ -363,7 +363,7 @@ module x_carriage_fan_duct_stl() {
                             cylinder(r1 = or - duct_wall, r2 = or + skew - duct_wall, h = nozzle_height);
                             hull() {
                                 translate([0, 0, nozzle_height - 2 * eta])
-                                    cylinder(r = or + skew - duct_wall, h = duct_height - nozzle_height - 5 * layer_height);
+                                    cylinder(r = or + skew - duct_wall, h = duct_height - nozzle_height - top_thickness + 4 * eta);
                                 throat(true);
                             }
                         }
@@ -374,6 +374,10 @@ module x_carriage_fan_duct_stl() {
                         translate([0, 0, nozzle_height - 2 * eta])
                             cylinder(r = ir + skew + duct_wall, h = duct_height - nozzle_height + 4 * eta);
 
+                        translate([-throat_width/2, +throat_width/2, duct_height - top_thickness])
+                            rotate([3, 0, 0])
+                                translate([0, -throat_width, 0])
+                                    cube([throat_width, throat_width, duct_height]);
                     }
             }
             for(side = [-1, 1])
