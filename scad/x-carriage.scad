@@ -262,7 +262,7 @@ skew = nozzle_height * tan(taper_angle);
 throat_width = (or + skew) * 2;
 
 fan_x = base_offset;
-fan_y = -(width / 2 + fan_width(part_fan) / 2) - (X_carriage_clearance + belt_width(X_belt) + belt_clearance);
+fan_y = -(width / 2 + fan_width(part_fan) / 2) - (X_carriage_clearance + belt_width(X_belt) + belt_clearance + 4);
 fan_z = nozzle_length + hot_end_duct_offset(hot_end)[2] - duct_height - fan_depth(part_fan) / 2;
 
 fan_y_duct = -fan_y + hot_end_duct_offset(hot_end)[1];
