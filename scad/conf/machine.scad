@@ -1,1 +1,1 @@
-include <my_sturdy_config.scad>
+include <akki_sturdy_config.scad>

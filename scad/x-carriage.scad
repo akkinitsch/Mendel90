@@ -232,11 +232,11 @@ module x_belt_tensioner_stl()
     }
 }
 
-part_fan = fan60x15;
-duct_wall = 2 * 0.35 * 1.5;
+part_fan = fan60x20;
+duct_wall = 2 * 0.5 * 1.5;
 top_thickness = 2;
 fan_nut_trap_thickness = 4;
-fan_bracket_thickness = 3;
+fan_bracket_thickness = 4;
 
 fan_screw = fan_screw(part_fan);
 fan_nut = screw_nut(fan_screw);
@@ -684,7 +684,7 @@ module x_carriage_hot_end_fan_assembly() {
     end("x_carriage_hot_end_fan_assembly");
 }
 
-module x_carriage_assembly(show_extruder = true, show_fan = false) {
+module x_carriage_assembly(show_extruder = true, show_fan = true) {
     if(show_extruder) {
         translate([75, extruder_width / 2, eta])
             rotate([-90,0,180])

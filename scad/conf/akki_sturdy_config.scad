@@ -59,7 +59,7 @@ Y_carriage = DiBond4;
 
 extruder_width = 30;        // actually 28 but offset
 nozzle_x_offset = 16;       // offset from centre of the extruder
-nozzle_length = 50;         // from base of extruder to nozzle tip
+nozzle_length = 60;         // from base of extruder to nozzle tip
 
 X_belt = T2p5x6;
 Y_belt = T2p5x6;
