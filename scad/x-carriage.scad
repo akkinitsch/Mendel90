@@ -232,8 +232,8 @@ module x_belt_tensioner_stl()
     }
 }
 
-part_fan = fan60x20;
-duct_wall = 2 * 0.5 * 1.5;
+part_fan = fan40x10;
+duct_wall = 3;
 top_thickness = 2;
 fan_nut_trap_thickness = 4;
 fan_bracket_thickness = 4;
