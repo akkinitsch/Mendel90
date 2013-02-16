@@ -584,6 +584,13 @@ module x_carriage_stl(){
                             nut_trap(screw_clearance_radius(M3_cap_screw), M3_nut_radius, M3_nut_trap_depth, true);
                             cylinder(r = M3_nut_radius + 1, h = bearing_holder_width(X_bearings), center = true);
                         }
+            translate([- bar_x + bearing_holder_length(X_bearings) / 2 + eta,
+                        - bar_y + wall - bearing_holder_width(X_bearings) / 2 + front_nut_depth + eta,
+                        -top_thickness - 1])
+                 cube([
+                    2 * bar_x - bearing_holder_length(X_bearings) - eta * 2,
+                    bearing_holder_width(X_bearings) - wall*2 - front_nut_depth*2 - eta*2,
+                    top_thickness + 2]);
         }
 }
 
