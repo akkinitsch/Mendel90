@@ -66,6 +66,7 @@ module belt_lug(motor_end) {
                          x_carriage_offset() - ball_bearing_diameter(X_idler_bearing) / 2;
 
     height2 = motor_end ? height + clamp_thickness : height;
+    belt_hole_height = belt_thickness(X_belt) + (motor_end ? 0.5: 0);
     width = lug_width;
     depth = lug_depth;
     extra = 0.5;            // extra belt clearance
@@ -80,7 +81,7 @@ module belt_lug(motor_end) {
             }
 
             translate([width / 2, slot_y, height - belt_thickness(X_belt) / 2 + 2 * eta])                   // slot for belt
-                cube([width + 1, belt_width(X_belt) + belt_clearance, belt_thickness(X_belt)], center = true);
+                cube([width + 1, belt_width(X_belt) + belt_clearance, belt_hole_height], center = true);
 
             translate([width / 2, lug_screw, height2 + M3_nut_trap_depth + eta])
                 nut_trap(M3_clearance_radius, M3_nut_radius, M3_nut_trap_depth);
