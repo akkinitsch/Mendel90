@@ -9,7 +9,7 @@
 //
 
 // [width, thickness, [latch_x, latch_y, latch_z], color, length]
-small_ziptie = [2.3, 1, [4.7, 4.25, 3], small_ziptie_color, 20];
+small_ziptie = [2.5, 1, [4.7, 4.25, 3], small_ziptie_color, 20];
 
 function ziptie_width(type) = type[0];
 function ziptie_thickness(type) = type[1];
